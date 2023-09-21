@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jeopardy Board</title>
+  <style>
+    @import url('https://fonts.cdnfonts.com/css/itc-korinna-std');
+
+    @font-face {
+      font-family: "Gypardody HV";
+      src: url('gyparody hv.ttf');
+    }
+    body {
+      font-family: "Gypardody HV", Arial, sans-serif;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-gap: 10px;
+      margin: 20px auto;
+      max-width: 900px;
+    }
+    .square {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #060CE9; /* Deep Blue background color */
+      color: #FFCC00; /* Canary Yellow font color */
+      font-size: 60px; /* Increased font size */
+      font-weight: bold;
+      height: 100px;
+      cursor: pointer;
+      text-align: center;
+      text-shadow: 2px 2px 2px #000;
+    }
+    .square span {
+      color: #FFCC00; /* Canary Yellow font color */
+    } 
+    .category span {
+      font-family: 'ITC Korinna Std', sans-serif;
+      font-size: 20px;
+      color: #fff;
+    }
+    .answer-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #060CE9; /* Deep Blue background color */
+    }
+    .answer-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      height: 100%;
+      /* padding: 0 100px; */
+      max-width: 800px;
+    }
+    #answer {
+      color: #ffffff;
+      font-family: 'ITC Korinna Std', sans-serif;
+      font-size: 70px;
+      font-weight: bold;
+      text-align: center;
+      text-shadow: 2px 2px 2px #000;
+      text-transform: uppercase;
+      line-height: 1;
+
+    }
+    .close-btn {
+      cursor: pointer;
+      color: #FFCC00; /* Canary Yellow font color */
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .daily-double-animation {
+      animation: daily-double 1s 3;
+    }
+
+    @keyframes daily-double {
+      0% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(0.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="board">
+  
+    <div class="square category"><span>NUMBERS</span></div>
+    <div class="square category"><span>LAWS & REGS</span></div>
+    <div class="square category"><span>HOUSE KEEPING</span></div>
+    <div class="square category"><span>ATTENDANTS</span></div>
+    <div class="square category"><span>GENERAL KNOWLEDGE</span></div>
+    <div class="square category"><span>ATTITUDE</span></div>
+
+    <div class="square" data-answer="15 TO 50" onclick="showAnswer(this)"><span>100</span></div>
+    <div class="square" data-answer="5 consecutive minutes is the maximum of time to do this in a school bus" onclick="showAnswer(this)"><span>100</span></div>
+    <div class="square" data-answer="this is required to be done by every driver after using a spare bus" onclick="showAnswer(this)"><span>100</span></div>
+    <div class="square" data-answer="Behind the last student" onclick="showAnswer(this)"><span>100</span></div>
+    <div class="square" data-answer="This should never be done in a school yard" onclick="showAnswer(this)"><span>100</span></div>
+    <div class="square" data-answer="These are 2 uncontrollable factors that impact your attitude" onclick="showAnswer(this)"><span>100</span></div>
+
+    <div class="square" data-answer="30 (psi)" onclick="showAnswer(this)"><span>200</span></div>
+    <div class="square" data-answer="A MINIMUM OF 3 OF THESE NEED TO BE DONE EACH SCHOOL YEAR WITH THE FIRST ONE TO BE CONDUCTED WITHIN THE FIRST 7 DAYS OF SCHOOL" onclick="showAnswer(this)"><span>200</span></div>
+    <div class="square" data-answer="THIS IS WHO HAS THE RIGHT OF WAY ON TC PROPERTY" onclick="showAnswer(this)"><span>200</span></div>
+    <div class="square" data-answer="BEING ON YOUR CELL PHONE" onclick="showAnswer(this)"><span>200</span></div>
+    <div class="square" data-answer="THIS IS THE MOST IMPORTANT THING YOU DO BEFORE EXITING YOUR BUS" onclick="showAnswer(this)"><span>200</span></div>
+    <div class="square" data-answer="These are 2 signs of mental stress" onclick="showAnswer(this)"><span>200</span></div>
+
+
+    <div class="square" data-answer="15 (FEET)" onclick="showAnswer(this)"><span>300</span></div>
+    <div class="square" data-answer="THIS IS THE CONSEQUENCE IF YOU FAIL TO NOTIFY TRANSPORTATION OF AN ACCIDENT OR CONVICTION OF A TRAFFIC VIOLATION" onclick="showAnswer(this)"><span>300</span></div>
+    <div class="square" data-answer="USING THE RADIO TO CALL A MECHANIC WHEN YOU ARE IN THE GARAGE" onclick="showAnswer(this)"><span>300</span></div>
+    <div class="square" data-answer="This is an important way to interact with students" onclick="showAnswer(this)"><span>300</span></div>
+    <div class="square" data-answer="THESE STUDENTS NEED AN AUTHORIZED PERSON TO MEET THEM AT THEIR BUS STOP" onclick="showAnswer(this)"><span>300</span></div>
+    <div class="square" data-answer="These are 2 signs of physical stress" onclick="showAnswer(this)"><span>300</span></div>
+
+
+    <div class="square" data-answer="55" onclick="showAnswer(this)"><span>400</span></div>
+    <div class="square" data-answer="This law requires school districts to provide transportation services up to a distance of 50 miles" onclick="showAnswer(this)"><span>400</span></div>
+    <div class="square" data-answer="IN THE FRONT 2 SPOTS THE BACK  BUMPERS SHOULD BE ON THE BACK LINE. IN THE 3RD AND 4TH SPOT THE FRONT BUMPER SHOULD BE ON THE FRONT LINE." onclick="showAnswer(this)"><span>400</span></div>
+    <div class="square" data-answer="Personal side conversations with the driver" onclick="showAnswer(this)"><span>400</span></div>
+    <div class="square" data-answer="50 degrees " onclick="showAnswer(this)"><span>400</span></div>
+    <div class="square" data-answer="These are 4 of the foundations for a positive attitude" onclick="showAnswer(this)"><span>400</span></div>
+
+
+    <div class="square" data-answer="5-5:15 AM" onclick="showAnswer(this)"><span>500</span></div>
+    <div class="square" data-answer="this law requires bus drivers to recieve training related to the understanding of and attention to the special needs of students with disabilities" onclick="showAnswer(this)"><span>500</span></div>
+    <div class="square" data-answer="WHEN WALKING THROUGH THE GARAGE OR PARKING LOT IT IS BEST TO KEEP THIS AWAY TO BE ABLE TO STAY ALERT." onclick="showAnswer(this)"><span>500</span></div>
+    <div class="square" data-answer="Checking wheelchair securements, carseats, and asking about specific student needs" onclick="showAnswer(this)"><span>500</span></div>
+    <div class="square" data-answer="This is the number of schools we have in the Liverpool District" onclick="showAnswer(this)"><span>500</span></div>
+    <div class="square" data-answer="MASMA is an acronym for this" onclick="showAnswer(this)"><span>500</span></div>
+
+  </div>
+
+  <div class="answer-modal" onclick="hideAnswer()">
+    <div class="answer-content">
+      <p id="answer"></p>
+      <span class="close-btn" onclick="hideAnswer()">&#10006;</span>
+    </div>
+  </div>
+
+  <script>
+    function showAnswer(square) {
+      const answerModal = document.querySelector(".answer-modal");
+      const answerContent = document.getElementById("answer");
+      const answer = square.getAttribute("data-answer");
+
+      if (square.classList.contains('daily-double')) {
+        const dailyDoubleAudio = new Audio('daily-double.mp3');
+
+        answerContent.textContent = "Daily Double!";
+        answerContent.classList.add('daily-double-animation');
+        dailyDoubleAudio.play();
+
+        answerContent.addEventListener('animationend', () => {
+          answerContent.textContent = answer;
+          answerContent.classList.remove('daily-double-animation');
+        });
+      } else {
+        answerContent.textContent = answer;
+      }
+
+      answerModal.style.display = "block";
+      square.textContent = "";
+    }
+
+    function hideAnswer() {
+      const answerModal = document.querySelector(".answer-modal");
+      answerModal.style.display = "none";
+    }
+
+    function assignDailyDouble() {
+      const squares = [...document.querySelectorAll('.square')];
+      const filtered = squares.filter((square) => !square.classList.contains('category'));
+
+      const randInt1 = Math.floor(Math.random() * filtered.length);
+      let randInt2;
+
+      do {
+        randInt2 = Math.floor(Math.random() * filtered.length);
+      } while (randInt1 === randInt2);
+
+      filtered[randInt1].classList.add('daily-double');
+      filtered[randInt2].classList.add('daily-double');
+    }
+
+    assignDailyDouble();
+  </script>
+</body>
+</html>
